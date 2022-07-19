@@ -332,9 +332,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * | BASE   |   1  |   2  |   3  |   4  |   5  |      |           |      |   6  |   7  |   8  |   9  |   0  | STEN   |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * | WNAV   |   Q  |   W  |   E  |   R  |   T  | STEN |           | STEN |   Y  |   U  |   I  |   O  |   P  | WNAV   |
+ * | WNAV   |   Q  |   W  |   E  |   R  |   T  | STEN |           | STEN |   Y  |   U  |   I  |   O  |   P  | MNAV   |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * | MNAV   |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |   :  | MNAV   |
+ * | MNAV   |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |   :  | BSLS   |
  * |--------+------+------+------+------+------| Alt  |           | Alt  |------+------+------+------+------+--------|
  * | LShift |   Z  |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |   /  | SYMB   |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
@@ -360,8 +360,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                     KC_BSPC, KC_TAB, OSM(MOD_LGUI),
         // right hand
         KC_NO,      KC_6,   KC_7,         KC_8,         KC_9,        KC_0,        TO(STENO),
-        TO(STENO),  KC_Y,   KC_U,         KC_I,         KC_O,        KC_P,        OSL(WNAV),
-                    KC_H,   KC_J,         KC_K,         KC_L,        LSFT(KC_SCLN), OSL(MNAV),
+        TO(STENO),  KC_Y,   KC_U,         KC_I,         KC_O,        KC_P,        OSL(MNAV),
+                    KC_H,   KC_J,         KC_K,         KC_L,        LSFT(KC_SCLN), KC_BSLS,
         OSM(MOD_RALT),KC_N, KC_M,         KC_COMM,      KC_DOT,      KC_SLSH,     OSL(SYMB),
                             KC_SPC, OSM(MOD_RCTL),     KC_QUOT,     KC_DQUO,     OSL(NUMS),
             OSL(TMUX), OSL(TMUX),
@@ -373,13 +373,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |      |      |      |      |      |      |           |      | CSL  | CSD  | CSU  | CSR  | VRSN | EEPROM |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |CtlBsp|Del   |PgUp  |Ins   |SftIns|      |           |      | CLeft| CDown| CUp  | CRght|      | RESET  |
+ * |        |CtlBsp|Del   |PgUp  |Ins   |SftIns|      |           |      | CLeft| CDown| CUp  | CRght|      | \      |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |CtSfHo|Home  |PgDown|End   |CtSfEn|------|           |------| Left | Down | Up   | Rght |      | VRSN   |
+ * | Esc    |CtSfHo|Home  |PgDown|End   |CtSfEn|------|           |------| Left | Down | Up   | Rght |      | \      |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        | UNDO | Cut  | Copy | Paste|      |      |           |      | WinN | WinM | Win, | Win. | Win/ |        |
+ * |        |      |      |      |      |      |      |           |      | WinN | WinM | Win, | Win. | Win/ |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      |CtlSpc|AltSpc|                                       |VolUp |VolDn | Prev | Next |      |
+ *   |      |      |      |      |      |                                       |VolUp |VolDn | Prev | Next |      |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,--------------.     ,---------------.
  *                                        |       |      |     |      |        |
@@ -398,7 +398,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                            _______, _______, _______, KC_DEL, _______, _______,
 
        _______, LCTL(LSFT(KC_LEFT)), LCTL(LSFT(KC_DOWN)), LCTL(LSFT(KC_UP)), LCTL(LSFT(KC_RGHT)), VRSN, RESET,
-       _______, LCTL(KC_LEFT), LCTL(KC_DOWN), LCTL(KC_UP), LCTL(KC_RGHT), _______, EEP_RST,
+       _______, LCTL(KC_LEFT), LCTL(KC_DOWN), LCTL(KC_UP), LCTL(KC_RGHT), _______, KC_BSLS,
                 KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, _______, KC_BSLS,
        _______, LGUI(KC_N), LGUI(KC_M), LGUI(KC_COMM), LGUI(KC_DOT), LGUI(KC_SLSH), _______,
                          KC_VOLU, KC_VOLD, KC_MPRV, KC_MNXT, _______,

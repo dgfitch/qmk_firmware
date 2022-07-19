@@ -3,15 +3,7 @@
 #include "keymap_steno.h"
 
 /*
-
-TODO:
-Do I actually use Mouse support?
-what to do with upper right esc and "tab" on right pinky?
-
-test numsctl and alt, left is one shot and right is toggle
-
-backslash somewhere better? double tap right shift? do I like that
-
+See cortex/notes/ergodox
 */
 
 
@@ -338,48 +330,48 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Base layer, normal-ish QWERTY except for outlying things like \:'"
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * | BASE   |   1  |   2  |   3  |   4  |   5  |      |           |      |   6  |   7  |   8  |   9  |   0  |        |
+ * | BASE   |   1  |   2  |   3  |   4  |   5  |      |           |      |   6  |   7  |   8  |   9  |   0  | STEN   |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * | WNAV   |   Q  |   W  |   E  |   R  |   T  |      |           | STEN |   Y  |   U  |   I  |   O  |   P  |        |
+ * | WNAV   |   Q  |   W  |   E  |   R  |   T  | STEN |           | STEN |   Y  |   U  |   I  |   O  |   P  | WNAV   |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * | MNAV   |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |   :  | \      |
- * |--------+------+------+------+------+------| \    |           | tmux |------+------+------+------+------+--------|
+ * | MNAV   |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |   :  | MNAV   |
+ * |--------+------+------+------+------+------| Alt  |           | Alt  |------+------+------+------+------+--------|
  * | LShift |   Z  |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |   /  | SYMB   |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   | NUMS |CtlShf|CtlAlt| Ctrl | Space|                                       |Space | LGui |   '  |   "  | NUMS |
+ *   | NUMS |CtlShf|CtlAlt| Ctrl | Space|                                       |Space | Ctrl |   '  |   "  | NUMS |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,--------------.     ,---------------.
- *                                        | NUMS  | NUMA |     | NUMA | NUMS   |
+ *                                        |       | TMUX |     | TMUX |        |
  *                                 ,------|-------|------|     |------+--------+------.
- *                                 |      |       | NUMC |     | NUMC |        |      |
+ *                                 |      |       |^LGui |     |^RGui |        |      |
  *                                 |BSpace| Tab   |------|     |------| Esc    |Enter |
- *                                 |      |       | STEN |     | TMUX |        |      |
+ *                                 |      |       | LGui |     | RGui |        |      |
  *                                 `---------------------'     `----------------------'
  */
 [BASE] = LAYOUT_ergodox(
         // left hand
         TO(BASE),     KC_1,         KC_2,             KC_3,           KC_4,   KC_5,   KC_NO,
-        OSL(WNAV),    KC_Q,         KC_W,             KC_E,           KC_R,   KC_T,   KC_NO,
+        OSL(WNAV),    KC_Q,         KC_W,             KC_E,           KC_R,   KC_T,   TO(STENO),
         OSL(MNAV),    KC_A,         KC_S,             KC_D,           KC_F,   KC_G,
-        KC_LSFT,      KC_Z,         KC_X,             KC_C,           KC_V,   KC_B,   KC_BSLS,
-        TG(NUMS),     OSM(MOD_LCTL|MOD_LSFT),OSM(MOD_LCTL|MOD_LALT),KC_LCTRL,  ALT_T(KC_SPC),
-                                    OSL(NUMS), OSL(NUMSALT),
-                                               OSL(NUMSCTL),
-                                    KC_BSPC, KC_TAB, TO(STENO),
+        KC_LSFT,      KC_Z,         KC_X,             KC_C,           KC_V,   KC_B,   OSM(MOD_LALT),
+        TG(NUMS),     OSM(MOD_LCTL|MOD_LSFT),OSM(MOD_LCTL|MOD_LALT),OSM(MOD_LCTL), KC_SPC,
+                                    OSL(TMUX), OSL(TMUX),
+                                               OSM(MOD_LSFT|MOD_LGUI),
+                                    KC_BSPC, KC_TAB, OSM(MOD_LGUI),
         // right hand
-        KC_NO,      KC_6,   KC_7,         KC_8,         KC_9,        KC_0,        TO(BASE),
-        TO(STENO),  KC_Y,   KC_U,         KC_I,         KC_O,        KC_P,        OSL(NUMS),
-                    KC_H,   KC_J,         KC_K,         KC_L,        LSFT(KC_SCLN), KC_BSLS,
-        OSL(TMUX),  KC_N,   KC_M,         KC_COMM,      KC_DOT,      KC_SLSH,     OSL(SYMB),
-                            GUI_T(KC_SPC),OSM(MOD_RGUI),KC_QUOT,     KC_DQUO,     OSL(NUMS),
-            TG(NUMSALT), TG(NUMS),
-            TG(NUMSCTL),
-            OSL(TMUX), KC_ESC, KC_ENT
+        KC_NO,      KC_6,   KC_7,         KC_8,         KC_9,        KC_0,        TO(STENO),
+        TO(STENO),  KC_Y,   KC_U,         KC_I,         KC_O,        KC_P,        OSL(WNAV),
+                    KC_H,   KC_J,         KC_K,         KC_L,        LSFT(KC_SCLN), OSL(MNAV),
+        OSM(MOD_RALT),KC_N, KC_M,         KC_COMM,      KC_DOT,      KC_SLSH,     OSL(SYMB),
+                            KC_SPC, OSM(MOD_RCTL),     KC_QUOT,     KC_DQUO,     OSL(NUMS),
+            OSL(TMUX), OSL(TMUX),
+            OSM(MOD_LSFT|MOD_LGUI),
+            OSM(MOD_LGUI), KC_ESC, KC_ENT
     ),
 
 /* MNAV: Movement/nav keys, hold caps
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |        |      |      |      |      |      |      |           |      | CSL  | CSD  | CSU  | CSR  |      | EEPROM |
+ * |        |      |      |      |      |      |      |           |      | CSL  | CSD  | CSU  | CSR  | VRSN | EEPROM |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * |        |CtlBsp|Del   |PgUp  |Ins   |SftIns|      |           |      | CLeft| CDown| CUp  | CRght|      | RESET  |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
@@ -405,9 +397,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        _______, _______, _______, _______, _______,
                                            _______, _______, _______, KC_DEL, _______, _______,
 
-       _______, LCTL(LSFT(KC_LEFT)), LCTL(LSFT(KC_DOWN)), LCTL(LSFT(KC_UP)), LCTL(LSFT(KC_RGHT)), _______, RESET,
+       _______, LCTL(LSFT(KC_LEFT)), LCTL(LSFT(KC_DOWN)), LCTL(LSFT(KC_UP)), LCTL(LSFT(KC_RGHT)), VRSN, RESET,
        _______, LCTL(KC_LEFT), LCTL(KC_DOWN), LCTL(KC_UP), LCTL(KC_RGHT), _______, EEP_RST,
-                KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, _______, VRSN,
+                KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, _______, KC_BSLS,
        _______, LGUI(KC_N), LGUI(KC_M), LGUI(KC_COMM), LGUI(KC_DOT), LGUI(KC_SLSH), _______,
                          KC_VOLU, KC_VOLD, KC_MPRV, KC_MNXT, _______,
        _______, _______, _______, _______, KC_MUTE, KC_MPLY
@@ -454,11 +446,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |   !  |   @  |   {  |   }  |   ~  |      |           |      |  +   |  _   |  -   |  #   |  %   |   F12  |
+ * | UNI3   |   !  |   @  |   {  |   }  |   ~  |      |           |      |  +   |  _   |  -   |  #   |  %   |   F12  |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |   '  |   "  |   (  |   )  |   `  |------|           |------|  ^   |  '   |  "   |  $   |  ;   | ;      |
+ * | UNI2   |   '  |   "  |   (  |   )  |   `  |------|           |------|  ^   |  '   |  "   |  $   |  ;   | ;      |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |   =  |   *  |   [  |   ]  |      |      |           |      |  |   |  \   |  <   |  >   |  &   | \      |
+ * | UNI1   |   =  |   *  |   [  |   ]  |      |      |           |      |  |   |  \   |  <   |  >   |  &   | \      |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   |      |      |      |      |      |                                       |      |      |      |      |      |
  *   `----------------------------------'                                       `----------------------------------'
@@ -495,7 +487,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 X(FSLF), X(THDN), X(THUP), X(FSRT), X(FIST), X(FSUP),
        _______, X(NAIL), X(METAL),X(FLEX), X(PRAY), X(WRITE),TO(BASE),
                          _______, _______, _______, _______, _______,
-       X(CRY1), X(CRY2), X(NAUS), X(PUKE), X(HOT),  X(COLD)
+       X(CRY1), X(CRY2), X(NAUS), X(PUKE), TO(BASE),  X(COLD)
 ),
 
 // UNICODE 2 (nouns)
@@ -513,7 +505,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 X(HOLE), _______, _______, X(HEART),_______, _______,
        _______, _______, _______, _______, _______, _______, TO(BASE),
                          _______, _______, _______, _______, _______,
-       _______, _______, _______, _______, _______, _______
+       _______, _______, _______, _______, TO(BASE), _______
 ),
 
 // UNICODE 3 (verbs left, useful symbols right)
@@ -530,7 +522,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 X(LEFT), X(DOWN), X(UP),   X(RIGHT),X(UPDN), _______,
        _______, _______, _______, _______, _______, _______, TO(BASE),
                          _______, _______, _______, _______, _______,
-       _______, _______, _______, _______, _______, _______
+       _______, _______, _______, _______, TO(BASE), _______
 ),
 
 
@@ -567,7 +559,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_F12,
        _______, KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  _______,
                          _______, _______, _______, _______, _______,
-       _______, _______, _______, _______, _______, _______
+       _______, _______, _______, _______, TO(BASE), _______
 ),
 /* Numbers nav layer for ALT */
 [NUMSALT] = LAYOUT_ergodox(
@@ -583,7 +575,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 LALT(KC_6),    LALT(KC_7),    LALT(KC_8),    LALT(KC_9),    LALT(KC_0),    _______,
        _______, _______, _______, _______, _______, _______, _______,
                          _______, _______, _______, _______, _______,
-       _______, _______, _______, _______, _______, _______
+       _______, _______, _______, _______, TO(BASE), _______
 ),
 /* Numbers nav layer for CTL */
 [NUMSCTL] = LAYOUT_ergodox(
@@ -599,7 +591,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 LCTL(KC_6),    LCTL(KC_7),    LCTL(KC_8),    LCTL(KC_9),    LCTL(KC_0),    _______,
        _______, _______, _______, _______, _______, _______, _______,
                          _______, _______, _______, _______, _______,
-       _______, _______, _______, _______, _______, _______
+       _______, _______, _______, _______, TO(BASE), _______
 ),
 
 // TMUX layout
@@ -616,7 +608,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 TMUXH,   TMUXJ,   TMUXK,   TMUXL,   TMUXCMD,   _______,
        LCTL(KC_BSLS), _______, _______, _______, _______, _______, _______,
                          _______, _______, _______, _______, _______,
-       _______, _______, _______, TMUXB, _______, _______ 
+       _______, _______, _______, TMUXB, TO(BASE), _______ 
 ),
 
 };
@@ -764,7 +756,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
       case UNI3:
           ergodox_right_led_3_on();
           break;
-
       default:
         break;
     }
